@@ -18,7 +18,7 @@ CFLAGS += -I./
 VPATH += ./
 
 # executable name
-EXEC = debug
+EXEC = smgraph
 
 # object folder
 OBJDIR = ./obj
