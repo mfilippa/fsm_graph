@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
 
     // print header
     fprintf(pfgraph, "digraph G {\n");
-    fprintf(pfgraph, "    node [shape = box];\n");
+    fprintf(pfgraph, "    node [shape=box,fontname=courier];\n");
 
     // find init
     do {
@@ -98,14 +98,14 @@ int main(int argc, char *argv[]){
             if (err==REGEX_ERR_NONE) {
                 // state found
                 regex_extract(tmpstr, str, start[1], len[1]);
-                fprintf(pfgraph, "    %s [label=\"## %s ##\\n", tmpstr, tmpstr);
+                fprintf(pfgraph, "    %s [label=\"=== %s ===\\n", tmpstr, tmpstr);
                 do {                    
                     if(fgets(str, STR_SIZE, pfsource)!=NULL) {
 
                         // find BEGIN_ENTRY
                         err = regex_search(str, begin_entry_str, start, len, &nsub);
                         if (err==REGEX_ERR_NONE) {
-                            fprintf(pfgraph, "Entry :\\l");
+                            fprintf(pfgraph, "Entry:\\l");
                             do {
                                 if(fgets(str, STR_SIZE, pfsource)!=NULL){
                                     // find comment
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]){
                         // find BEGIN_EXIT
                         err = regex_search(str, begin_exit_str, start, len, &nsub);
                         if (err==REGEX_ERR_NONE) {
-                            fprintf(pfgraph, "Exit  :\\l");
+                            fprintf(pfgraph, "Exit:\\l");
                             do {
                                 if(fgets(str, STR_SIZE, pfsource)!=NULL){
                                     // find comment
@@ -205,7 +205,7 @@ int main(int argc, char *argv[]){
                             regex_extract(tmpstr, str, start[2], len[2]);
                             fprintf(pfgraph, "%s ", tmpstr);
                             regex_extract(tmpstr, str, start[1], len[1]);
-                            fprintf(pfgraph, "[label=\"%s", tmpstr);
+                            fprintf(pfgraph, "[fontname=courier,label=\"%s", tmpstr);
                             do {
                                 if(fgets(str, STR_SIZE, pfsource)!=NULL){
                                     // // find comment
