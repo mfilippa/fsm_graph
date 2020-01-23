@@ -1,0 +1,48 @@
+# ------------------------------------------------------------------------------
+# makefile template - MPF 12/2019
+# ------------------------------------------------------------------------------
+
+# compiler
+CC = gcc
+
+# compiler flags:
+# .. all warnings
+CFLAGS += -Wall
+# .. generate dependency files *.d
+CFLAGS += -MMD -MP
+# .. #define symbols
+CFLAGS += -DSYMBOL
+# .. paths to search for header files
+CFLAGS += -I./
+# .. paths to search for source files
+VPATH += ./
+
+# executable name
+EXEC = debug
+
+# object folder
+OBJDIR = ./obj
+
+# source files
+SRC = main.c\
+	regex_lib.c
+
+# build target - linker command
+$(EXEC) : $(SRC:%.c=$(OBJDIR)/%.o)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# compile source files
+$(OBJDIR)/%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# auto dependencies - recompile if a header file changed
+-include $(SRC:%.c=$(OBJDIR)/%.d)
+
+# clean
+.PHONY: clean 
+clean :
+	rm -f $(EXEC)
+	rm -f $(SRC:%.c=$(OBJDIR)/%.o)
+	rm -f $(SRC:%.c=$(OBJDIR)/%.d)
+
+
