@@ -1,0 +1,14 @@
+digraph G {
+    node [shape=box,fontname=courier];
+    ENTRY [label="ENTRY"];
+    ENTRY -> STATE_STATE1;
+    STATE_STATE1 [label="=== STATE_STATE1 ===\nEntry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l"];
+    STATE_STATE2 [label="=== STATE_STATE2 ===\nEntry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l"];
+    STATE_STATE3 [label="=== STATE_STATE3 ===\nEntry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l"];
+    STATE_STOP [label="=== STATE_STOP ===\n"];
+    ALL [label="ALL"];
+    ALL -> STATE_STOP [fontname=courier,label="stop"];
+    STATE_STATE1 -> STATE_STATE2 [fontname=courier,label="i==4"];
+    STATE_STATE2 -> STATE_STATE3 [fontname=courier,label="i==5"];
+    STATE_STATE3 -> STATE_STATE1 [fontname=courier,label="i==6"];
+}

@@ -1,3 +1,0 @@
-#!/bin/bash
-./smgraph example.c test.dot
-dot -Tjpg test.dot -o test.jpg

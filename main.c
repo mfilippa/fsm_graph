@@ -77,8 +77,8 @@ int main(int argc, char *argv[]){
 
     // find init
     do {
-        // find a FSM INIT
         if(fgets(str, STR_SIZE, pfsource)!=NULL) {
+            // find a FSM INIT
             err = regex_search(str, fsm_init_str, start, len, &nsub);
             if (err==REGEX_ERR_NONE) {
                 // init found
@@ -92,8 +92,8 @@ int main(int argc, char *argv[]){
 
     // parse states
     do {
-        // find a BEGIN_STATE
         if(fgets(str, STR_SIZE, pfsource)!=NULL) {
+            // find a BEGIN_STATE
             err = regex_search(str, begin_state_str, start, len, &nsub);
             if (err==REGEX_ERR_NONE) {
                 // state found
@@ -188,12 +188,48 @@ int main(int argc, char *argv[]){
 
     // parse events
     rewind(pfsource);
+    int begin_state_found=0;
+    int all_state_created=0;
     do {
-        // find a BEGIN_STATE
         if(fgets(str, STR_SIZE, pfsource)!=NULL) {
+            // find a BEGIN_EVENT before BEGIN_FSM
+            if (!begin_state_found){
+                err = regex_search(str, begin_event_str, start, len, &nsub);
+                if (err==REGEX_ERR_NONE) {
+                    if (!all_state_created){
+                        fprintf(pfgraph, "    ALL [label=\"ALL\"];\n");
+                        all_state_created = 1;
+                    }
+                    fprintf(pfgraph, "    ALL -> ");
+                    regex_extract(tmpstr, str, start[2], len[2]);
+                    fprintf(pfgraph, "%s ", tmpstr);
+                    regex_extract(tmpstr, str, start[1], len[1]);
+                    fprintf(pfgraph, "[fontname=courier,label=\"%s", tmpstr);
+                    do {
+                        if(fgets(str, STR_SIZE, pfsource)!=NULL){
+                            // // find comment
+                            // err = regex_search(str, comment_str, start, len, &nsub);
+                            // if (err==REGEX_ERR_NONE) {
+                            //     regex_extract(tmpstr, str, start[1], len[1]);
+                            //     fprintf(pfgraph, "  %s\\l", tmpstr);
+                            //     continue;
+                            // }
+                            // find END_EVENT
+                            err = regex_search(str, end_event_str, start, len, &nsub);
+                            if (err==REGEX_ERR_NONE) {
+                                // exit BEGIN EVENT
+                                fprintf(pfgraph, "\"];\n");
+                                break;
+                            }
+                        }
+                    } while (!feof(pfsource));
+                }
+            }
+            // find a BEGIN_STATE
             err = regex_search(str, begin_state_str, start, len, &nsub);
             if (err==REGEX_ERR_NONE) {
                 // state found
+                begin_state_found = 1;
                 regex_extract(state, str, start[1], len[1]);
                 do {                    
                     if(fgets(str, STR_SIZE, pfsource)!=NULL) {
