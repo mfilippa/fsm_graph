@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
 
     // print header
     fprintf(pfgraph, "digraph G {\n");
-    fprintf(pfgraph, "    node [shape=box,fontname=courier];\n");
+    fprintf(pfgraph, "    node [shape=Mrecord,fontname=courier];\n");
 
     // find init
     do {
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
             if (err==REGEX_ERR_NONE) {
                 // init found
                 regex_extract(tmpstr, str, start[1], len[1]);                
-                fprintf(pfgraph, "    ENTRY [style=bold,label=\"ENTRY\"];\n");
+                fprintf(pfgraph, "    ENTRY [shape=box,style=bold,label=\"ENTRY\"];\n");
                 fprintf(pfgraph, "    ENTRY -> %s;\n", tmpstr);
                 break;
             }
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
             if (err==REGEX_ERR_NONE) {
                 // state found
                 regex_extract(tmpstr, str, start[1], len[1]);
-                fprintf(pfgraph, "    %s [shape=\"Mrecord\",label=\"{%s|", tmpstr, tmpstr);
+                fprintf(pfgraph, "    %s [label=\"{%s|", tmpstr, tmpstr);
                 do {                    
                     if(fgets(str, STR_SIZE, pfsource)!=NULL) {
 
@@ -197,7 +197,7 @@ int main(int argc, char *argv[]){
                 err = regex_search(str, begin_event_str, start, len, &nsub);
                 if (err==REGEX_ERR_NONE) {
                     if (!all_state_created){
-                        fprintf(pfgraph, "    ALL [style=bold,label=\"ALL\"];\n");
+                        fprintf(pfgraph, "    ALL [shape=box,style=bold,label=\"ALL\"];\n");
                         all_state_created = 1;
                     }
                     fprintf(pfgraph, "    ALL -> ");

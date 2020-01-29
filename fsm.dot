@@ -1,12 +1,12 @@
 digraph G {
-    node [shape=box,fontname=courier];
-    ENTRY [style=bold,label="ENTRY"];
+    node [shape=Mrecord,fontname=courier];
+    ENTRY [shape=box,style=bold,label="ENTRY"];
     ENTRY -> STATE_STATE1;
-    STATE_STATE1 [shape="Mrecord",label="{STATE_STATE1|Entry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l}"];
-    STATE_STATE2 [shape="Mrecord",label="{STATE_STATE2|Entry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l}"];
-    STATE_STATE3 [shape="Mrecord",label="{STATE_STATE3|Entry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l}"];
-    STATE_STOP [shape="Mrecord",label="{STATE_STOP|Entry:\l  set stop = 0\l}"];
-    ALL [style=bold,label="ALL"];
+    STATE_STATE1 [label="{STATE_STATE1|Entry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l}"];
+    STATE_STATE2 [label="{STATE_STATE2|Entry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l}"];
+    STATE_STATE3 [label="{STATE_STATE3|Entry:\l  do nothing\lDuring:\l  increment i\lExit:\l  set i = 0\l}"];
+    STATE_STOP [label="{STATE_STOP|Entry:\l  set stop = 0\l}"];
+    ALL [shape=box,style=bold,label="ALL"];
     ALL -> STATE_STOP [fontname=courier,label="stop"];
     STATE_STATE1 -> STATE_STATE2 [fontname=courier,label="i==4"];
     STATE_STATE2 -> STATE_STATE3 [fontname=courier,label="i==5"];
