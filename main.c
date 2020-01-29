@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
             if (err==REGEX_ERR_NONE) {
                 // init found
                 regex_extract(tmpstr, str, start[1], len[1]);                
-                fprintf(pfgraph, "    ENTRY [label=\"ENTRY\"];\n");
+                fprintf(pfgraph, "    ENTRY [style=bold,label=\"ENTRY\"];\n");
                 fprintf(pfgraph, "    ENTRY -> %s;\n", tmpstr);
                 break;
             }
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]){
             if (err==REGEX_ERR_NONE) {
                 // state found
                 regex_extract(tmpstr, str, start[1], len[1]);
-                fprintf(pfgraph, "    %s [label=\"=== %s ===\\n", tmpstr, tmpstr);
+                fprintf(pfgraph, "    %s [shape=\"Mrecord\",label=\"{%s|", tmpstr, tmpstr);
                 do {                    
                     if(fgets(str, STR_SIZE, pfsource)!=NULL) {
 
@@ -174,7 +174,7 @@ int main(int argc, char *argv[]){
                         // find END_STATE
                         err = regex_search(str, end_state_str, start, len, &nsub);
                         if (err==REGEX_ERR_NONE) {
-                            fprintf(pfgraph, "\"];\n");
+                            fprintf(pfgraph, "}\"];\n");
                             break;
                         }
 
@@ -197,7 +197,7 @@ int main(int argc, char *argv[]){
                 err = regex_search(str, begin_event_str, start, len, &nsub);
                 if (err==REGEX_ERR_NONE) {
                     if (!all_state_created){
-                        fprintf(pfgraph, "    ALL [label=\"ALL\"];\n");
+                        fprintf(pfgraph, "    ALL [style=bold,label=\"ALL\"];\n");
                         all_state_created = 1;
                     }
                     fprintf(pfgraph, "    ALL -> ");

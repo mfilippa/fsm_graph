@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "fsm.h"
 
+
 // enumerate states
 enum states_enum {
     STATE_STATE1,
@@ -20,6 +21,25 @@ enum states_enum {
 // fsm structure
 fsm_t fsm;
 #define FSM_STRCT fsm
+
+// prototypes
+void fsm_init(void);
+void fsm_step(void);
+
+// -----------------------------------------------------------------------------
+// main
+// -----------------------------------------------------------------------------
+int i,j;
+int stop;
+int main(void){
+    stop=0;
+    fsm_init();
+    for (j=0; j<50; j++) {
+        if (j==40) stop=1;
+        fsm_step();
+    }
+    return 0;
+}
 
 // -----------------------------------------------------------------------------
 // sm init
@@ -34,6 +54,8 @@ void fsm_init(void){
 void fsm_step(void){
 
     BEGIN_EVENT(stop,STATE_STOP);
+        // stop all
+        printf("Stop all\n");
     END_EVENT;
     
     BEGIN_FSM;
@@ -117,7 +139,14 @@ void fsm_step(void){
         END_STATE;
 
         BEGIN_STATE(STATE_STOP);
-
+            BEGIN_ENTRY;
+                // set stop = 0
+                stop = 0;
+            END_ENTRY;
+            BEGIN_EVENT(start,STATE_STATE1);
+                // restart the machine
+                printf("Restarting the machine\n");
+            END_EVENT;
         END_STATE;
 
     END_FSM;
